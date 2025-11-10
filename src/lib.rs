@@ -4,11 +4,19 @@ use pyo3::prelude::*;
 /// 
 #[pymodule]
 mod mokaccino_py {
-    use pyo3::prelude::*;
+    use pyo3::{prelude::*, types::PyType};
 
     #[pyclass]
-    struct Query(mokaccino::prelude::Query);
+    pub struct Query(mokaccino::prelude::Query);
 
+    #[pymethods]
+    impl Query {
+        #[classmethod]
+        fn from_kv(cls: &Bound<'_, PyType>, k: String, v: String) -> PyResult<Self> {
+            let query = mokaccino::prelude::Query::term(k, v);
+            Ok(Self(query))
+        }
+    }
 
     /// Formats the sum of two numbers as string.
     #[pyfunction]

@@ -10,5 +10,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = "0.27.0"
-mokaccino = "0.3.0"
+mokaccino = { version = "0.4.0", features = ["send"] }
 
