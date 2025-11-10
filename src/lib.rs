@@ -1,5 +1,4 @@
 use pyo3::prelude::*;
-use pyo3::types::PyAnyMethods;
 
 /// Python glue for mokaccino library.
 /// 
@@ -73,13 +72,29 @@ mod mokaccino_py {
             }
             Ok(Self(mokaccino::prelude::Query::from_or(items)))
         }
-        
-
     }
 
-    /// Formats the sum of two numbers as string.
-    #[pyfunction]
-    fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
-        Ok((a + b).to_string())
+
+    #[derive(Clone)]
+    #[pyclass]
+    pub struct Document(mokaccino::prelude::Document);
+
+    #[pymethods]
+    impl Document{
+
+        #[new]
+        fn new() -> Self{
+            Self(mokaccino::prelude::Document::new())
+        }
+
+        pub fn with_value(&self, field: String, value: String) -> PyResult<Self> {
+            Ok(Self(self.0.clone().with_value(field, value)))
+        }
+
+        pub fn field_values(&self) -> PyResult<Vec<(String,String)>>{
+            Ok(self.0.field_values()
+            .map(|(f,v)| (f.to_string(), v.to_string()))
+            .collect())
+        }
     }
 }
