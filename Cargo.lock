@@ -125,7 +125,7 @@ dependencies = [
 
 [[package]]
 name = "mokaccino_py"
-version = "0.1.0"
+version = "0.4.1"
 dependencies = [
  "mokaccino",
  "pyo3",

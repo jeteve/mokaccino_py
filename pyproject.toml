@@ -4,7 +4,6 @@ build-backend = "maturin"
 
 [tool.maturin]
 sdist-include = ["README.md"]
-features = ["pyo3/extension-module"]
 
 [project]
 name = "mokaccino"
@@ -16,7 +15,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Topic :: Software Development :: Libraries",
 ]
-dynamic = ["version"]
+dynamic = ["version"] # Will take version from Cargo.toml
 readme = "README.md"
 
 [project.optional-dependencies]
