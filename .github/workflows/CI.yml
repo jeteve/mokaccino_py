@@ -19,6 +19,21 @@ permissions:
   contents: read
 
 jobs:
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+      - name: Install stuff and run tests
+        run: |
+          uvx maturin develop
+          uv venv --python 3.13
+          uv sync --extra dev
+          . .venv/bin/activate
+          pytest tests
+
   linux:
     runs-on: ${{ matrix.platform.runner }}
     strategy:
