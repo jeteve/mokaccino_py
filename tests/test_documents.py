@@ -8,6 +8,8 @@ def test_build():
     d = d.with_value("field", "v3")
     d = d.with_value("taste", "sweet")
     assert d is not None
+    # Not the default str repr.
+    assert "mokaccino.Document" not in str(d)
     assert next( vf for vf in d.field_values() if vf == ("field", "v2") )
     assert next( vf for vf in d.field_values() if vf == ("taste", "sweet") )
 

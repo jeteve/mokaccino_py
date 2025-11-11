@@ -75,6 +75,10 @@ mod mokaccino {
             }
             Ok(Self(mokaccino::prelude::Query::from_or(items)))
         }
+
+        fn __str__(&self) -> String{
+            self.0.to_string()
+        }
     }
 
     #[derive(Clone)]
@@ -86,6 +90,10 @@ mod mokaccino {
         #[new]
         fn new() -> Self {
             Self(mokaccino::prelude::Document::new())
+        }
+
+        fn __str__(&self) -> String{
+            format!("{:?}" , self.0 )
         }
 
         pub fn with_value(&self, field: &str, value: &str) -> PyResult<Self> {

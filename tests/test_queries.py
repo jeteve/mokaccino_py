@@ -17,3 +17,9 @@ def test_combination():
     q2 = Query.from_kv("a", "b")
     assert Query.from_and([q1, q2]) is not None
     assert Query.from_or([q1, q2]) is not None
+
+def test_representation():
+    # String representation is not generic 
+    # mokaccino.Query
+    assert "mokaccino.Query" not in str(Query.from_kv("field", "value"))
+    assert "field=value" in str(Query.from_kv("field", "value"))
