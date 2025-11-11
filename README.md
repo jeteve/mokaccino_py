@@ -1,4 +1,5 @@
 # About Mokaccino
+[![CI](https://github.com/jeteve/mokaccino_py/actions/workflows/CI.yml/badge.svg)]
 
 This is a Python binding for https://crates.io/crates/mokaccino.
 
