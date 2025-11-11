@@ -21,4 +21,8 @@ uv run examples/...
 ```
 
 
-In development, loop through 3 and 2
+In development, loop through 3 and 2:
+
+```sh
+uvx maturin develop && pytest
+```

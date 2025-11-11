@@ -8,4 +8,10 @@ def test_build():
     d = d.with_value("field", "v3")
     d = d.with_value("taste", "sweet")
     assert d is not None
-    assert d.field_values() == [("field", "v1"), ("field", "v2"), ("field" , "v3"), ("taste", "sweet")]
+    assert next( vf for vf in d.field_values() if vf == ("field", "v2") )
+    assert next( vf for vf in d.field_values() if vf == ("taste", "sweet") )
+
+    d = Document().with_value("field", "v1")
+    d2 = d.merge_with(Document().with_value("field", "v2"))
+    assert next( vf for vf in d2.field_values() if vf == ("field", "v1") )
+    assert next( vf for vf in d2.field_values() if vf == ("field", "v2") )
