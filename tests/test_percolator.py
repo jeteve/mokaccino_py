@@ -9,4 +9,4 @@ def test_percolator_works():
     assert qid == 0
 
     d = Document().with_value("field", "value")
-    assert p.percolate(d) == [qid]
+    assert p.percolate_list(d) == [qid]

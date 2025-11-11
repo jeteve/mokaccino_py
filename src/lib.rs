@@ -119,7 +119,7 @@ mod mokaccino {
             Ok(self.0.add_query(query.0.clone()))
         }
 
-        fn percolate(&self, document: &Document) -> PyResult<Vec<Qid>> {
+        fn percolate_list(&self, document: &Document) -> PyResult<Vec<Qid>> {
             Ok(self.0.percolate(&document.0).collect())
         }
     }
