@@ -1,5 +1,5 @@
-import mokaccino_py as mp
-from mokaccino_py import Query
+import mokaccino as mp
+from mokaccino import Query
 
 def test_final_queries():
     assert Query.from_kv("field", "value") is not None

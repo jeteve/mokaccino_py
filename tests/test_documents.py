@@ -1,4 +1,4 @@
-from mokaccino_py import Document
+from mokaccino import Document
 
 def test_build():
     d = Document()

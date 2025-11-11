@@ -112,9 +112,9 @@ dependencies = [
 
 [[package]]
 name = "mokaccino"
-version = "0.4.0"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b800bef68c4ce06bd29d4ba9b085f7fc966f7c9721f4c1db08162f54f2c00bc"
+checksum = "31326349a5a50f9b2e4f0440500377e10028e5c0c818c727df928b5278c9b473"
 dependencies = [
  "hashbrown",
  "hstats",

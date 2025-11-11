@@ -3,7 +3,7 @@ use pyo3::prelude::*;
 /// Python glue for mokaccino library.
 ///
 #[pymodule]
-mod mokaccino_py {
+mod mokaccino {
     use mokaccino::prelude::CNFQueryable;
     use pyo3::{
         prelude::*,
@@ -104,4 +104,7 @@ mod mokaccino_py {
             Ok(Self(self.0.merge_with(&other.0)))
         }
     }
+
+    #[pyclass]
+    pub struct Percolator(mokaccino::prelude::Percolator);
 }
