@@ -1,5 +1,6 @@
 # About Mokaccino
-![CI](https://github.com/jeteve/mokaccino_py/actions/workflows/CI.yml/badge.svg)
+[![CI](https://github.com/jeteve/mokaccino_py/actions/workflows/CI.yml/badge.svg)](https://github.com/jeteve/mokaccino_py/actions/workflows/CI.yml) ![PyPI - Version](https://img.shields.io/pypi/v/mokaccino)
+
 
 This is a Python binding for https://crates.io/crates/mokaccino.
 
