@@ -4,9 +4,21 @@ from mokaccino import Percolator, Query, Document
 def test_percolator_works():
     p = Percolator()
     assert p is not None
-    q =  Query.from_kv("field", "value")
-    qid = p.add_query(q)
-    assert qid == 0
+    qids = [
+        p.add_query(Query.from_kv("name", "sausage")),
+        p.add_query(Query.from_kprefix("name", "amaz")),
+        p.add_query(Query.from_kgt("price", 12)),
+    ]
 
-    d = Document().with_value("field", "value")
-    assert p.percolate_list(d) == [qid]
+    assert p.percolate_list(Document()) == []
+    assert p.percolate_list(Document().with_value("name", "burger")) == []
+    assert p.percolate_list(Document().with_value("name", "sausage")) == [qids[0]]
+    assert p.percolate_list(Document().with_value("name", "amaz")) == [qids[1]]
+    assert p.percolate_list(Document().with_value("name", "amazing")) == [qids[1]]
+    assert p.percolate_list(Document().with_value("name", "amazon")) == [qids[1]]
+    assert p.percolate_list(Document().with_value("price", "12")) == []
+    assert p.percolate_list(Document().with_value("price", "13")) == [qids[2]]
+    assert p.percolate_list(Document().with_value("price", "13")) == [qids[2]]
+    assert p.percolate_list(
+        Document().with_value("price", "13").with_value("name", "amazed")
+    ) == [qids[1], qids[2]]
