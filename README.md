@@ -1,3 +1,51 @@
+# About Mokaccino
+
+This is a Python binding for https://crates.io/crates/mokaccino.
+
+Mokaccino is a Percolator.
+
+A Percolator is a component that allows the matching of a stream of documents (for instance representing events) against a set of queries (representing specific interests in events).
+
+# Install/Usage
+
+Install via pip compatible tools as usual.
+
+Example Usage (taken from a test):
+
+```python
+
+def test_percolator():
+    p = Percolator()
+    assert p is not None
+    qids = [
+        p.add_query(Query.from_kv("name", "sausage")),
+        p.add_query(Query.from_kprefix("name", "amaz")),
+        p.add_query(Query.from_kgt("price", 12)),
+        p.add_query(Query.from_kv("name", "sausage") | Query.from_kgt("price", 12)),
+    ]
+
+    assert p.percolate_list(Document()) == []
+    assert p.percolate_list(Document().with_value("name", "burger")) == []
+    assert p.percolate_list(Document().with_value("name", "sausage")) == [qids[0], qids[3]]
+    assert p.percolate_list(Document().with_value("name", "amaz")) == [qids[1]]
+    assert p.percolate_list(Document().with_value("name", "amazing")) == [qids[1]]
+    assert p.percolate_list(Document().with_value("name", "amazon")) == [qids[1]]
+    assert p.percolate_list(Document().with_value("price", "12")) == []
+    assert p.percolate_list(Document().with_value("price", "13")) == [qids[2], qids[3]]
+    assert p.percolate_list(
+        Document().with_value("price", "13").with_value("name", "amazed")
+    ) == [qids[1], qids[2], qids[3]]
+
+```
+
+More extensive documentation should probably be provided, but in the meanwhile, have a look
+at the unit tests, which cover everything you can do with this:
+
+https://github.com/jeteve/mokaccino_py/tree/main/tests
+
+
+# Development
+
 This uses uv/uvx to handle the python side of things
 
 1. Prepare the venv
