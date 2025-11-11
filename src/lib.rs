@@ -79,6 +79,20 @@ mod mokaccino {
         fn __str__(&self) -> String{
             self.0.to_string()
         }
+
+        fn __and__(&self, other: Self) -> PyResult<Self> {
+            Ok(Self(self.0.clone() & other.0))
+        }
+ 
+        fn __or__(&self, other: Self) -> PyResult<Self> {
+            Ok(Self(self.0.clone() | other.0))
+        }
+
+        fn __invert__(&self) -> PyResult<Self> {
+            Ok(Self(! self.0.clone()))
+        }
+
+
     }
 
     #[derive(Clone)]
