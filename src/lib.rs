@@ -16,6 +16,7 @@ mod mokaccino {
 
     #[pymethods]
     impl Query {
+        /// Create a Query that matches documents where field `k` has value `v`.
         #[classmethod]
         fn from_kv(_cls: &Bound<'_, PyType>, k: &str, v: &str) -> PyResult<Self> {
             Ok(Self(k.has_value(v)))

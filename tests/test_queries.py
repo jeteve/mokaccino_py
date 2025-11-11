@@ -1,4 +1,3 @@
-import mokaccino as mp
 from mokaccino import Query
 
 def test_final_queries():
