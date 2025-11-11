@@ -4,7 +4,7 @@ use pyo3::prelude::*;
 ///
 #[pymodule]
 mod mokaccino {
-    use mokaccino::prelude::CNFQueryable;
+    use mokaccino::prelude::{CNFQueryable, Qid};
     use pyo3::{
         prelude::*,
         types::{PyIterator, PyType},
@@ -113,6 +113,14 @@ mod mokaccino {
         #[new]
         fn new() -> Self {
             Self(mokaccino::prelude::Percolator::default())
+        }
+
+        fn add_query(&mut self, query: &Query) -> PyResult<Qid> {
+            Ok(self.0.add_query(query.0.clone()))
+        }
+
+        fn percolate(&self, document: &Document) -> PyResult<Vec<Qid>> {
+            Ok(self.0.percolate(&document.0).collect())
         }
     }
 }
