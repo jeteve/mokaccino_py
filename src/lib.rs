@@ -107,4 +107,12 @@ mod mokaccino {
 
     #[pyclass]
     pub struct Percolator(mokaccino::prelude::Percolator);
+
+    #[pymethods]
+    impl Percolator {
+        #[new]
+        fn new() -> Self {
+            Self(mokaccino::prelude::Percolator::default())
+        }
+    }
 }
