@@ -9,6 +9,8 @@ classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
+    "Development Status :: 4 - Beta",
+    "Topic :: Software Development :: Libraries",
 ]
 dynamic = ["version"]
 
@@ -16,3 +18,8 @@ dynamic = ["version"]
 dev = [
     "pytest",
 ]
+
+[project.urls]
+Documentation = "https://github.com/jeteve/mokaccino_py#readme"
+Issues = "https://github.com/jeteve/mokaccino_py/issues"
+Source = "https://github.com/jeteve/mokaccino_py"
