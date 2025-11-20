@@ -6,8 +6,7 @@ use pyo3::prelude::*;
 mod mokaccino {
     use mokaccino::prelude::{CNFQueryable, Qid};
     use pyo3::{
-        prelude::*,
-        types::{PyIterator, PyType},
+        exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
     };
 
     #[derive(Clone)]
@@ -16,6 +15,14 @@ mod mokaccino {
 
     #[pymethods]
     impl Query {
+
+        #[classmethod]
+        fn parse(_cls: &Bound<'_, PyType>, s: &str) -> PyResult<Self> {
+            s.parse::<mokaccino::prelude::Query>()
+                .map(|q| Self(q))
+                .map_err(|e| PyRuntimeError::new_err(format!("Parse error: {}", e)))
+        }
+
         /// Create a Query that matches documents where field `k` has value `v`.
         #[classmethod]
         fn from_kv(_cls: &Bound<'_, PyType>, k: &str, v: &str) -> PyResult<Self> {
@@ -144,6 +151,20 @@ mod mokaccino {
 
         fn percolate_list(&self, document: &Document) -> PyResult<Vec<Qid>> {
             Ok(self.0.percolate(&document.0).collect())
+        }
+
+        fn to_json(&self) -> PyResult<String> {
+            serde_json::to_string(&self.0).map_err(|e|
+                PyRuntimeError::new_err(format!("Serialization error: {}", e))
+            )
+        }
+
+        #[classmethod]
+        fn from_json(_cls: &Bound<'_, PyType>, json_str: &str) -> PyResult<Self> {
+            let p: mokaccino::prelude::Percolator = serde_json::from_str(json_str).map_err(|e|
+                PyRuntimeError::new_err(format!("Deserialization error: {}", e))
+            )?;
+            Ok(Self(p))
         }
     }
 }

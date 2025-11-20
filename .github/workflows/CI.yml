@@ -29,6 +29,7 @@ jobs:
       - name: Install stuff and run tests
         run: |
           uv venv --python 3.13
+          apt-get update && apt-get install -y patchelf
           uvx maturin develop
           uv sync --extra dev
           . .venv/bin/activate
@@ -48,8 +49,8 @@ jobs:
             target: aarch64
           - runner: ubuntu-22.04
             target: armv7
-          - runner: ubuntu-22.04
-            target: s390x
+          #- runner: ubuntu-22.04
+          #  target: s390x
           - runner: ubuntu-22.04
             target: ppc64le
     steps:

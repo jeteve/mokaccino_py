@@ -54,6 +54,8 @@ This uses uv/uvx to handle the python side of things
 
 ```sh
 uv venv --python 3.13
+uv sync --extra dev
+
 ```
 
 2. Compile everything using maturin
