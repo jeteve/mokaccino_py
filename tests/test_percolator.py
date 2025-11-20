@@ -9,7 +9,7 @@ def test_deserialise_fail():
         '{"queries": ["not a query"]}',
     ]
     for invalid_json in invalid_jsons:
-        with pytest.raises(Exception):
+        with pytest.raises(RuntimeError):
             Percolator.from_json(invalid_json)
         
 

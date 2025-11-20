@@ -5,7 +5,7 @@ def test_query_parsing():
     q = Query.parse("name:sausage")
     assert q is not None
     assert "name=sausage" in str(q)
-    with pytest.raises(Exception):
+    with pytest.raises(RuntimeError):
         Query.parse("invalid query string")
     # See other examples of query parsing at
     # https://crates.io/crates/mokaccino
