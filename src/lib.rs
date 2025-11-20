@@ -6,8 +6,7 @@ use pyo3::prelude::*;
 mod mokaccino {
     use mokaccino::prelude::{CNFQueryable, Qid};
     use pyo3::{
-        prelude::*,
-        types::{PyIterator, PyType},
+        exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
     };
 
     #[derive(Clone)]
@@ -148,14 +147,14 @@ mod mokaccino {
 
         fn to_json(&self) -> PyResult<String> {
             serde_json::to_string(&self.0).map_err(|e|
-                PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("Serialization error: {}", e))
+                PyRuntimeError::new_err(format!("Serialization error: {}", e))
             )
         }
 
         #[classmethod]
         fn from_json(_cls: &Bound<'_, PyType>, json_str: &str) -> PyResult<Self> {
             let p: mokaccino::prelude::Percolator = serde_json::from_str(json_str).map_err(|e|
-                PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("Deserialization error: {}", e))
+                PyRuntimeError::new_err(format!("Deserialization error: {}", e))
             )?;
             Ok(Self(p))
         }

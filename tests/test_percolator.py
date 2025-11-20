@@ -1,6 +1,17 @@
 from mokaccino import Percolator, Query, Document
+import pytest
 
-
+def test_deserialise_fail():
+    invalid_jsons = [
+        "",
+        "not a json",
+        '{"invalid": "structure"}',
+        '{"queries": ["not a query"]}',
+    ]
+    for invalid_json in invalid_jsons:
+        with pytest.raises(Exception):
+            Percolator.from_json(invalid_json)
+        
 
 def test_percolator_works():
     p = Percolator()
