@@ -15,6 +15,14 @@ mod mokaccino {
 
     #[pymethods]
     impl Query {
+
+        #[classmethod]
+        fn parse(_cls: &Bound<'_, PyType>, s: &str) -> PyResult<Self> {
+            s.parse::<mokaccino::prelude::Query>()
+                .map(|q| Self(q))
+                .map_err(|e| PyRuntimeError::new_err(format!("Parse error: {}", e)))
+        }
+
         /// Create a Query that matches documents where field `k` has value `v`.
         #[classmethod]
         fn from_kv(_cls: &Bound<'_, PyType>, k: &str, v: &str) -> PyResult<Self> {
