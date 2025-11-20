@@ -145,5 +145,19 @@ mod mokaccino {
         fn percolate_list(&self, document: &Document) -> PyResult<Vec<Qid>> {
             Ok(self.0.percolate(&document.0).collect())
         }
+
+        fn to_json(&self) -> PyResult<String> {
+            serde_json::to_string(&self.0).map_err(|e|
+                PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("Serialization error: {}", e))
+            )
+        }
+
+        #[classmethod]
+        fn from_json(_cls: &Bound<'_, PyType>, json_str: &str) -> PyResult<Self> {
+            let p: mokaccino::prelude::Percolator = serde_json::from_str(json_str).map_err(|e|
+                PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("Deserialization error: {}", e))
+            )?;
+            Ok(Self(p))
+        }
     }
 }

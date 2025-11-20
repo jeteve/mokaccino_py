@@ -1,6 +1,7 @@
 from mokaccino import Percolator, Query, Document
 
 
+
 def test_percolator_works():
     p = Percolator()
     assert p is not None
@@ -10,6 +11,20 @@ def test_percolator_works():
         p.add_query(Query.from_kgt("price", 12)),
         p.add_query(Query.from_kv("name", "sausage") | Query.from_kgt("price", 12)),
     ]
+    percolator_test(p, qids)
+
+    # Test serialisation
+    assert p.to_json() is not None
+
+    p2 = Percolator.from_json(p.to_json())
+    assert p2 is not None
+    # The deserialized percolator should give the same results
+    percolator_test(p2, qids)
+
+
+
+def percolator_test(p: Percolator, qids: list[int]):
+    
 
     assert p.percolate_list(Document()) == []
     assert p.percolate_list(Document().with_value("name", "burger")) == []
