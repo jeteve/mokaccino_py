@@ -17,10 +17,10 @@ def test_percolator_works():
     p = Percolator()
     assert p is not None
     qids = [
-        p.add_query(Query.from_kv("name", "sausage")),
-        p.add_query(Query.from_kprefix("name", "amaz")),
-        p.add_query(Query.from_kgt("price", 12)),
-        p.add_query(Query.from_kv("name", "sausage") | Query.from_kgt("price", 12)),
+        p.add_query(Query.parse("name:sausage")),
+        p.add_query(Query.parse("name:amaz*")),
+        p.add_query(Query.parse("price>12")),
+        p.add_query(Query.parse("name:sausage OR price>12")),
     ]
     percolator_test(p, qids)
 

@@ -40,7 +40,27 @@ def test_percolator():
 
 ```
 
-More extensive documentation should probably be provided, but in the meanwhile, have a look
+## Using query parsing.
+
+If you plan to have free formed queries, you can use query parsing to build
+queries:
+
+```python
+   qids = [
+        p.add_query(Query.parse("name:sausage")),
+        p.add_query(Query.parse("name:amaz*")),
+        p.add_query(Query.parse("price>12")),
+        p.add_query(Query.parse("name:sausage OR price>12")),
+    ]
+```
+
+Query parsing works as you expect, with boolean `AND`, `OR` and `NOT` and `( )` to
+work around precedence.
+
+Non-word values can be enclosed in `"`s (for example `field:"non word value"`) and the
+escape character is `\`.
+
+More extensive documentation will be provided, but in the meanwhile, have a look
 at the unit tests, which cover everything you can do with this:
 
 https://github.com/jeteve/mokaccino_py/tree/main/tests
