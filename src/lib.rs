@@ -5,7 +5,7 @@ use pyo3::prelude::*;
 ///
 #[pymodule]
 mod mokaccino {
-    use mokaccino::prelude::{CNFQueryable, Qid};
+    use mokaccino_lib::prelude::{CNFQueryable, Qid};
     use pyo3::{
         exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
     };
@@ -14,7 +14,7 @@ mod mokaccino {
     #[derive(Clone)]
     #[gen_stub_pyclass]
     #[pyclass]
-    pub struct Query(mokaccino::prelude::Query);
+    pub struct Query(mokaccino_lib::prelude::Query);
 
     #[gen_stub_pymethods]
     #[pymethods]
@@ -22,7 +22,7 @@ mod mokaccino {
 
         #[classmethod]
         fn parse(_cls: &Bound<'_, PyType>, s: &str) -> PyResult<Self> {
-            s.parse::<mokaccino::prelude::Query>()
+            s.parse::<mokaccino_lib::prelude::Query>()
                 .map(|q| Self(q))
                 .map_err(|e| PyRuntimeError::new_err(format!("Parse error: {}", e)))
         }
@@ -70,22 +70,22 @@ mod mokaccino {
 
         #[classmethod]
         fn from_and(_cls: &Bound<'_, PyType>, iterable: &Bound<'_, PyAny>) -> PyResult<Self> {
-            let mut items: Vec<mokaccino::prelude::Query> = vec![];
+            let mut items: Vec<mokaccino_lib::prelude::Query> = vec![];
             for item in PyIterator::from_object(iterable)? {
                 let q: Self = item?.extract::<Query>()?;
                 items.push(q.0);
             }
-            Ok(Self(mokaccino::prelude::Query::from_and(items)))
+            Ok(Self(mokaccino_lib::prelude::Query::from_and(items)))
         }
 
         #[classmethod]
         fn from_or(_cls: &Bound<'_, PyType>, iterable: &Bound<'_, PyAny>) -> PyResult<Self> {
-            let mut items: Vec<mokaccino::prelude::Query> = vec![];
+            let mut items: Vec<mokaccino_lib::prelude::Query> = vec![];
             for item in PyIterator::from_object(iterable)? {
                 let q: Self = item?.extract::<Query>()?;
                 items.push(q.0);
             }
-            Ok(Self(mokaccino::prelude::Query::from_or(items)))
+            Ok(Self(mokaccino_lib::prelude::Query::from_or(items)))
         }
 
         fn __str__(&self) -> String{
@@ -108,14 +108,16 @@ mod mokaccino {
     }
 
     #[derive(Clone)]
+    #[gen_stub_pyclass]
     #[pyclass]
-    pub struct Document(mokaccino::prelude::Document);
+    pub struct Document(mokaccino_lib::prelude::Document);
 
+    #[gen_stub_pymethods]
     #[pymethods]
     impl Document {
         #[new]
         fn new() -> Self {
-            Self(mokaccino::prelude::Document::new())
+            Self(mokaccino_lib::prelude::Document::new())
         }
 
         fn __str__(&self) -> String{
@@ -139,14 +141,16 @@ mod mokaccino {
         }
     }
 
+    #[gen_stub_pyclass]
     #[pyclass]
-    pub struct Percolator(mokaccino::prelude::Percolator);
+    pub struct Percolator(mokaccino_lib::prelude::Percolator);
 
+    #[gen_stub_pymethods]
     #[pymethods]
     impl Percolator {
         #[new]
         fn new() -> Self {
-            Self(mokaccino::prelude::Percolator::default())
+            Self(mokaccino_lib::prelude::Percolator::default())
         }
 
         fn add_query(&mut self, query: &Query) -> PyResult<Qid> {
@@ -165,7 +169,7 @@ mod mokaccino {
 
         #[classmethod]
         fn from_json(_cls: &Bound<'_, PyType>, json_str: &str) -> PyResult<Self> {
-            let p: mokaccino::prelude::Percolator = serde_json::from_str(json_str).map_err(|e|
+            let p: mokaccino_lib::prelude::Percolator = serde_json::from_str(json_str).map_err(|e|
                 PyRuntimeError::new_err(format!("Deserialization error: {}", e))
             )?;
             Ok(Self(p))
