@@ -18,7 +18,10 @@ crate-type = ["cdylib", "rlib"]
 
 
 [dependencies]
-pyo3 = { version="0.27.1",features = ["abi3-py310"] }
-pyo3-stub-gen = "0.17.2"
+pyo3 = { version="0.27.1" }
+pyo3-stub-gen =  { version = "0.17.2", optional = true }
 serde_json = "^1.0"
 mokaccino_rust = { package="mokaccino", version = "0.5.0", features = ["send", "serde"] }
+
+[features]
+stub-gen = ["dep:pyo3-stub-gen", "pyo3/abi3-py310" ]

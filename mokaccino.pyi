@@ -6,31 +6,75 @@ import typing
 
 @typing.final
 class Query:
+    r"""
+    A Mokaccino Query object, representing an interest
+    in documents matching certain criteria.
+    """
     @classmethod
-    def parse(cls, s: builtins.str) -> Query: ...
+    def parse(cls, s: builtins.str) -> Query:
+        r"""
+        Parse the given query string into a Query object.
+        See mokaccino documentation for the query syntax, or individual
+        methods to create Query objects.
+        """
     @classmethod
     def from_kv(cls, k: builtins.str, v: builtins.str) -> Query:
         r"""
         Create a Query that matches documents where field `k` has value `v`.
         """
     @classmethod
-    def from_kprefix(cls, k: builtins.str, p: builtins.str) -> Query: ...
+    def from_kprefix(cls, k: builtins.str, p: builtins.str) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` has prefix `p`.
+        """
     @classmethod
-    def from_klt(cls, k: builtins.str, v: builtins.int) -> Query: ...
+    def from_klt(cls, k: builtins.str, v: builtins.int) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` as an integer
+        is lower than the given `v` value.
+        """
     @classmethod
-    def from_kle(cls, k: builtins.str, v: builtins.int) -> Query: ...
+    def from_kle(cls, k: builtins.str, v: builtins.int) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` as an integer
+        is lower than or equal to the given `v` value.
+        """
     @classmethod
-    def from_keq(cls, k: builtins.str, v: builtins.int) -> Query: ...
+    def from_keq(cls, k: builtins.str, v: builtins.int) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` as an integer
+        is equal to the given `v` value.
+        """
     @classmethod
-    def from_kge(cls, k: builtins.str, v: builtins.int) -> Query: ...
+    def from_kge(cls, k: builtins.str, v: builtins.int) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` as an integer
+        is greater than or equal to the given `v` value.
+        """
     @classmethod
-    def from_kgt(cls, k: builtins.str, v: builtins.int) -> Query: ...
+    def from_kgt(cls, k: builtins.str, v: builtins.int) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` as an integer
+        is greater than the given `v` value.
+        """
     @classmethod
-    def from_not(cls, q: Query) -> Query: ...
+    def from_not(cls, q: Query) -> Query:
+        r"""
+        Create a Query that matches documents NOT matching the given Query `q`.
+        Alternatively, use the `~` operator before a Query object.
+        """
     @classmethod
-    def from_and(cls, iterable: typing.Any) -> Query: ...
+    def from_and(cls, iterable: typing.Any) -> Query:
+        r"""
+        Create a Query that matches documents matching ALL of the given Queries
+        Alternatively, use the `&` operator between Query objects.
+        """
     @classmethod
-    def from_or(cls, iterable: typing.Any) -> Query: ...
+    def from_or(cls, iterable: typing.Any) -> Query:
+        r"""
+        Create a Query that matches documents matching ANY of the given Queries
+        Alternatively, use the `|` operator between Query objects.
+        """
     def __str__(self) -> builtins.str: ...
     def __and__(self, other: Query) -> Query: ...
     def __or__(self, other: Query) -> Query: ...

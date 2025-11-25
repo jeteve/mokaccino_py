@@ -9,17 +9,24 @@ mod mokaccino {
     use pyo3::{
         exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
     };
+    #[cfg(feature = "stub-gen")]
     use pyo3_stub_gen::derive::*;
 
+    /// A Mokaccino Query object, representing an interest
+    /// in documents matching certain criteria.
     #[derive(Clone)]
-    #[gen_stub_pyclass]
+    #[cfg_attr(feature = "stub-gen", gen_stub_pyclass)]
     #[pyclass]
     pub struct Query(mokaccino_rust::prelude::Query);
 
-    #[gen_stub_pymethods]
+
+    #[cfg_attr(feature = "stub-gen", gen_stub_pymethods)]
     #[pymethods]
     impl Query {
 
+        /// Parse the given query string into a Query object.
+        /// See mokaccino documentation for the query syntax, or individual
+        /// methods to create Query objects.
         #[classmethod]
         fn parse(_cls: &Bound<'_, PyType>, s: &str) -> PyResult<Self> {
             s.parse::<mokaccino_rust::prelude::Query>()
@@ -33,41 +40,56 @@ mod mokaccino {
             Ok(Self(k.has_value(v)))
         }
 
+        /// Create a Query that matches documents where field `k` has prefix `p`.
         #[classmethod]
         fn from_kprefix(_cls: &Bound<'_, PyType>, k: &str, p: &str) -> PyResult<Self> {
             Ok(Self(k.has_prefix(p)))
         }
 
+        /// Create a Query that matches documents where field `k` as an integer
+        /// is lower than the given `v` value.
         #[classmethod]
         fn from_klt(_cls: &Bound<'_, PyType>, k: &str, v: i64) -> PyResult<Self> {
             Ok(Self(k.i64_lt(v)))
         }
 
+        /// Create a Query that matches documents where field `k` as an integer
+        /// is lower than or equal to the given `v` value.
         #[classmethod]
         fn from_kle(_cls: &Bound<'_, PyType>, k: &str, v: i64) -> PyResult<Self> {
             Ok(Self(k.i64_le(v)))
         }
 
+        /// Create a Query that matches documents where field `k` as an integer
+        /// is equal to the given `v` value.
         #[classmethod]
         fn from_keq(_cls: &Bound<'_, PyType>, k: &str, v: i64) -> PyResult<Self> {
             Ok(Self(k.i64_eq(v)))
         }
 
+        /// Create a Query that matches documents where field `k` as an integer
+        /// is greater than or equal to the given `v` value.
         #[classmethod]
         fn from_kge(_cls: &Bound<'_, PyType>, k: &str, v: i64) -> PyResult<Self> {
             Ok(Self(k.i64_ge(v)))
         }
 
+        /// Create a Query that matches documents where field `k` as an integer
+        /// is greater than the given `v` value.
         #[classmethod]
         fn from_kgt(_cls: &Bound<'_, PyType>, k: &str, v: i64) -> PyResult<Self> {
             Ok(Self(k.i64_gt(v)))
         }
 
+        /// Create a Query that matches documents NOT matching the given Query `q`.
+        /// Alternatively, use the `~` operator before a Query object.
         #[classmethod]
         fn from_not(_cls: &Bound<'_, PyType>, q: &Self) -> PyResult<Self> {
             Ok(Self(!q.0.clone()))
         }
 
+        /// Create a Query that matches documents matching ALL of the given Queries
+        /// Alternatively, use the `&` operator between Query objects.
         #[classmethod]
         fn from_and(_cls: &Bound<'_, PyType>, iterable: &Bound<'_, PyAny>) -> PyResult<Self> {
             let mut items: Vec<mokaccino_rust::prelude::Query> = vec![];
@@ -78,6 +100,8 @@ mod mokaccino {
             Ok(Self(mokaccino_rust::prelude::Query::from_and(items)))
         }
 
+        /// Create a Query that matches documents matching ANY of the given Queries
+        /// Alternatively, use the `|` operator between Query objects.
         #[classmethod]
         fn from_or(_cls: &Bound<'_, PyType>, iterable: &Bound<'_, PyAny>) -> PyResult<Self> {
             let mut items: Vec<mokaccino_rust::prelude::Query> = vec![];
@@ -174,5 +198,7 @@ mod mokaccino {
 
 }
 
+#[cfg(feature = "stub-gen")]
 use pyo3_stub_gen::define_stub_info_gatherer;
+#[cfg(feature = "stub-gen")]
 define_stub_info_gatherer!(stub_info);
