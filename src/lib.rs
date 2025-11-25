@@ -1,5 +1,6 @@
 use pyo3::prelude::*;
 
+
 /// Python glue for mokaccino library.
 ///
 #[pymodule]
@@ -8,11 +9,14 @@ mod mokaccino {
     use pyo3::{
         exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
     };
+    use pyo3_stub_gen::derive::*;
 
     #[derive(Clone)]
+    #[gen_stub_pyclass]
     #[pyclass]
     pub struct Query(mokaccino::prelude::Query);
 
+    #[gen_stub_pymethods]
     #[pymethods]
     impl Query {
 
@@ -167,4 +171,8 @@ mod mokaccino {
             Ok(Self(p))
         }
     }
+
 }
+
+use pyo3_stub_gen::define_stub_info_gatherer;
+define_stub_info_gatherer!(stub_info);
