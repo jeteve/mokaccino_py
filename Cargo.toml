@@ -16,9 +16,6 @@ documentation = "https://github.com/jeteve/mokaccino_py#readme"
 name = "mokaccino"
 crate-type = ["cdylib", "rlib"]
 
-[[bin]]
-name = "stub_gen"
-doc = false
 
 [dependencies]
 pyo3 = { version="0.27.1",features = ["abi3-py310"] }
