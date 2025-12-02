@@ -181,6 +181,13 @@ mod mokaccino {
             Ok(Self(new_doc))
         }
 
+        /// Adds the given field,value to the document in place.
+        pub fn add_value(&mut self, field: &str, value: &str) -> PyResult<()>{
+            let new_doc = take(&mut self.0).with_value(field, value);
+            self.0 = new_doc;
+            Ok(())
+        }
+
         /// Return a list of (field, value) pairs in this Document.
         pub fn field_values(&self) -> PyResult<Vec<(String, String)>> {
             Ok(self

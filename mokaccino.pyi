@@ -18,6 +18,10 @@ class Document:
         
         This will leave this document empty, so you MUST use the returned value.
         """
+    def add_value(self, field: builtins.str, value: builtins.str) -> None:
+        r"""
+        Adds the given field,value to the document in place.
+        """
     def field_values(self) -> builtins.list[tuple[builtins.str, builtins.str]]:
         r"""
         Return a list of (field, value) pairs in this Document.
