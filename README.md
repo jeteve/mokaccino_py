@@ -82,7 +82,7 @@ uv sync --extra dev
 
 ```sh
 # To regenerate the mokaccino.pyi stub:
-cargo run --bin stub_gen
+cargo run -F stub-gen --bin stub_gen
 
 uvx maturin develop
 ```

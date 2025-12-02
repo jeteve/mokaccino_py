@@ -15,6 +15,8 @@ class Document:
     def with_value(self, field: builtins.str, value: builtins.str) -> Document:
         r"""
         Return a new Document with the given field set to the given value.
+        
+        This will leave this document empty, so you MUST use the returned value.
         """
     def field_values(self) -> builtins.list[tuple[builtins.str, builtins.str]]:
         r"""

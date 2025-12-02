@@ -5,6 +5,8 @@ use pyo3::prelude::*;
 ///
 #[pymodule]
 mod mokaccino {
+    use std::mem::take;
+
     use mokaccino_rust::prelude::{CNFQueryable, Qid};
     use pyo3::{
         exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
@@ -172,8 +174,11 @@ mod mokaccino {
         }
 
         /// Return a new Document with the given field set to the given value.
-        pub fn with_value(&self, field: &str, value: &str) -> PyResult<Self> {
-            Ok(Self(self.0.clone().with_value(field, value)))
+        /// 
+        /// This will leave this document empty, so you MUST use the returned value.
+        pub fn with_value(&mut self, field: &str, value: &str) -> PyResult<Self> {
+            let new_doc = take(&mut self.0).with_value(field, value);
+            Ok(Self(new_doc))
         }
 
         /// Return a list of (field, value) pairs in this Document.
