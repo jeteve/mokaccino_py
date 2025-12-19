@@ -40,6 +40,19 @@ def test_percolator():
 
 ```
 
+## H3 Geography support
+
+You can match documents based on their location within an H3 cell.
+
+```python
+    # Matches documents whose "location" field is inside the given H3 cell
+    # (or inside any child cell)
+    q = Query.from_h3in("location", "85283473fffffff")
+
+    # Or using parsing:
+    q = Query.parse("location H3IN 85283473fffffff")
+```
+
 ## Using query parsing.
 
 If you plan to have free formed queries, you can use query parsing to build
