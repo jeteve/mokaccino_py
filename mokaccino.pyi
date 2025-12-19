@@ -131,6 +131,16 @@ class Query:
         This is the equivalent to parsing the query string `k>v`.
         """
     @classmethod
+    def from_h3in(cls, k: builtins.str, cell: builtins.str) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` is a location
+        inside or equal to the given h3 cell.
+
+        This is the equivalent to parsing the query string `k H3IN cell`.
+
+        The cell must be a valid h3 index hexadecimal string.
+        """
+    @classmethod
     def from_not(cls, q: Query) -> Query:
         r"""
         Create a Query that matches documents NOT matching the given Query `q`.

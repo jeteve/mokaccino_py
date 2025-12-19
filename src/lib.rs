@@ -7,6 +7,7 @@ use pyo3::prelude::*;
 mod mokaccino {
     use std::mem::take;
 
+    use h3o::CellIndex;
     use mokaccino_rust::prelude::{CNFQueryable, Qid};
     use pyo3::{
         exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
@@ -96,6 +97,20 @@ mod mokaccino {
         #[classmethod]
         fn from_kgt(_cls: &Bound<'_, PyType>, k: &str, v: i64) -> PyResult<Self> {
             Ok(Self(k.i64_gt(v)))
+        }
+
+        /// Create a Query that matches documents where field `k` is a location
+        /// inside or equal to the given h3 cell.
+        ///
+        /// This is the equivalent to parsing the query string `k H3IN cell`.
+        ///
+        /// The cell must be a valid h3 index hexadecimal string.
+        #[classmethod]
+        fn from_h3in(_cls: &Bound<'_, PyType>, k: &str, cell: &str) -> PyResult<Self> {
+            let cell_index = cell.parse::<CellIndex>().map_err(|e| {
+                PyRuntimeError::new_err(format!("Invalid h3 cell index: {}", e))
+            })?;
+            Ok(Self(k.h3in(cell_index)))
         }
 
         /// Create a Query that matches documents NOT matching the given Query `q`.
