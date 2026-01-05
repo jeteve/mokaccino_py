@@ -20,8 +20,8 @@ def test_percolator():
     p = Percolator()
     assert p is not None
     qids = [
-        p.add_query(Query.from_kv("name", "sausage")),
-        p.add_query(Query.from_kprefix("name", "amaz")),
+        p.add_query(Query.from_kv("name", "sausage")), # Use automated query IDs
+        p.add_query_id(Query.from_kprefix("name", "amaz"), 42), # Or provide your own application query IDs
         p.add_query(Query.from_kgt("price", 12)),
         p.add_query(Query.from_kv("name", "sausage") | Query.from_kgt("price", 12)),
     ]

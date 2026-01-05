@@ -1,5 +1,6 @@
 from mokaccino import Percolator, Query, Document
 import pytest
+import sys
 
 def test_deserialise_fail():
     invalid_jsons = [
@@ -16,12 +17,24 @@ def test_deserialise_fail():
 def test_percolator_works():
     p = Percolator()
     assert p is not None
+
+
+    # Negative query IDs are forbidden.
+    with pytest.raises(OverflowError):
+        p.add_query_id(Query.parse("name:sausage"), -1)
+    
+    # Anything too marge is also forbidden.
+    with pytest.raises(OverflowError):
+        p.add_query_id(Query.parse("name:sausage"), sys.maxsize)
+
     qids = [
         p.add_query(Query.parse("name:sausage")),
         p.add_query(Query.parse("name:amaz*")),
         p.add_query(Query.parse("price>12")),
         p.add_query(Query.parse("name:sausage OR price>12")),
+        p.add_query_id(Query.parse("name:sausage"), 42)
     ]
+   
     percolator_test(p, qids)
 
     # Test serialisation
@@ -39,7 +52,7 @@ def percolator_test(p: Percolator, qids: list[int]):
 
     assert p.percolate_list(Document()) == []
     assert p.percolate_list(Document().with_value("name", "burger")) == []
-    assert p.percolate_list(Document().with_value("name", "sausage")) == [qids[0], qids[3]]
+    assert p.percolate_list(Document().with_value("name", "sausage")) == [qids[0], qids[3], 42]
     assert p.percolate_list(Document().with_value("name", "amaz")) == [qids[1]]
     assert p.percolate_list(Document().with_value("name", "amazing")) == [qids[1]]
     assert p.percolate_list(Document().with_value("name", "amazon")) == [qids[1]]

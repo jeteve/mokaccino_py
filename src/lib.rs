@@ -260,6 +260,17 @@ mod mokaccino {
             Ok(self.0.add_query(query.0.clone()))
         }
 
+        /// Add a Query to the Percolator, returning the Qid
+        /// 
+        /// Using this method, you can control the ID associated with
+        /// the query, allowing you to index queries from your application
+        /// data store.
+        /// 
+        /// Query IDs MUST be 32 bits UNSIGNED integers.
+        fn add_query_id(&mut self, query: &Query, id: Qid) -> PyResult<Qid>{
+            self.0.index_query_uid(query.0.clone(), id).map_err(|e| PyRuntimeError::new_err(format!("Indexing error: {:?}", e)))
+        }
+
         /// Percolate the given Document against the Percolator,
         /// returning a list of Qids of matching Queries.
         fn percolate_list(&self, document: &Document) -> PyResult<Vec<Qid>> {
