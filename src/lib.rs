@@ -7,8 +7,8 @@ use pyo3::prelude::*;
 mod mokaccino {
     use std::mem::take;
 
-    use h3o::CellIndex;
-    use mokaccino_rust::prelude::{CNFQueryable, Qid};
+    use h3o::{CellIndex, LatLng};
+    use mokaccino_rust::prelude::{CNFQueryable, Meters, Qid};
     use pyo3::{
         exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
     };
@@ -111,6 +111,23 @@ mod mokaccino {
                 PyRuntimeError::new_err(format!("Invalid h3 cell index: {}", e))
             })?;
             Ok(Self(k.h3in(cell_index)))
+        }
+
+        /// Create a Query that matches documents where field `k` is a location
+        /// within the given distance in meters from the given lat/lng.
+        #[classmethod]
+        fn from_latlng_within(
+            _cls: &Bound<'_, PyType>,
+            k: &str,
+            lat: f64,
+            lng: f64,
+            distance_meters: u64,
+        ) -> PyResult<Self> {
+            let latlng = LatLng::new(lat, lng).map_err(|e| {
+                PyRuntimeError::new_err(format!("Invalid lat/lng: {}", e))
+            })?;
+            let meters = Meters(distance_meters);
+            Ok(Self(k.latlng_within(latlng, meters)))
         }
 
         /// Create a Query that matches documents NOT matching the given Query `q`.
