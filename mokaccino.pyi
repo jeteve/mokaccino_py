@@ -141,6 +141,12 @@ class Query:
         The cell must be a valid h3 index hexadecimal string.
         """
     @classmethod
+    def from_latlng_within(cls, k: builtins.str, lat: builtins.float, lng: builtins.float, distance_meters: builtins.int) -> Query:
+        r"""
+        Create a Query that matches documents where field `k` is a location
+        within the given distance in meters from the given lat/lng.
+        """
+    @classmethod
     def from_not(cls, q: Query) -> Query:
         r"""
         Create a Query that matches documents NOT matching the given Query `q`.

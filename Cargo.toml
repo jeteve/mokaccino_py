@@ -1,6 +1,6 @@
 [package]
 name = "mokaccino_py"
-version = "0.6.0" # Note this is the python package version.
+version = "0.7.0" # Note this is the python package version.
 edition = "2024"
 readme = "README.md"
 description = "Match transient documents against a queries set."
@@ -22,7 +22,7 @@ pyo3 = { version="0.27.1" }
 pyo3-stub-gen =  { version = "0.17.2", optional = true }
 serde_json = "^1.0"
 h3o = "0.9.4"
-mokaccino_rust = { package="mokaccino", version = "0.6.0", features = ["send", "serde"] }
+mokaccino_rust = { package="mokaccino", version = "0.7.0", features = ["send", "serde"] }
 
 [features]
 stub-gen = ["dep:pyo3-stub-gen", "pyo3/abi3-py310" ]
