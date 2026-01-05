@@ -40,6 +40,23 @@ def test_percolator():
 
 ```
 
+## Lat,Long,Distance Geography support
+
+You can match queries based on a location within a certain distance of a point.
+
+```python
+    # Matches documents whose "location" field is within 1000m of the given lat/lng
+    q = Query.from_latlng_within("location", 37.7749, -122.4194, 1000)
+
+    # Alternatively, you can use query parsing too:
+    q = Query.parse("location LLWITHIN 37.7749,-122.4194,1000")
+
+```
+
+The document field "location" can be either:
+- A valid H3 cell index (hexadecimal string).
+- A comma-separated string "lat,lng" (e.g. "37.7749,-122.4194").
+
 ## H3 Geography support
 
 You can match documents based on their location within an H3 cell.
@@ -88,6 +105,7 @@ This uses uv/uvx to handle the python side of things
 ```sh
 uv venv --python 3.13
 uv sync --extra dev
+source .venv/bin/activate
 
 ```
 
@@ -109,7 +127,7 @@ uv run examples/...
 ```
 
 
-In development, loop through 3 and 2:
+In development, loop through steps 2 and 3:
 
 ```sh
 uvx maturin develop && pytest
