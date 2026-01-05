@@ -53,6 +53,17 @@ You can match documents based on their location within an H3 cell.
     q = Query.parse("location H3IN 85283473fffffff")
 ```
 
+You can also match documents based on their location within a certain distance of a point.
+
+```python
+    # Matches documents whose "location" field is within 1000m of the given lat/lng
+    q = Query.from_latlng_within("location", 37.7749, -122.4194, 1000)
+```
+
+The document field "location" can be either:
+- A valid H3 cell index (hexadecimal string).
+- A comma-separated string "lat,lng" (e.g. "37.7749,-122.4194").
+
 ## Using query parsing.
 
 If you plan to have free formed queries, you can use query parsing to build
