@@ -45,6 +45,16 @@ class Percolator:
         The Qid can be used to identify the Query later, so you need
         to keep track of it in your application.
         """
+    def add_query_id(self, query: Query, id: builtins.int) -> builtins.int:
+        r"""
+        Add a Query to the Percolator, returning the Qid
+        
+        Using this method, you can control the ID associated with
+        the query, allowing you to index queries from your application
+        data store.
+        
+        Query IDs MUST be 32 bits UNSIGNED integers.
+        """
     def percolate_list(self, document: Document) -> builtins.list[builtins.int]:
         r"""
         Percolate the given Document against the Percolator,
@@ -135,9 +145,9 @@ class Query:
         r"""
         Create a Query that matches documents where field `k` is a location
         inside or equal to the given h3 cell.
-
+        
         This is the equivalent to parsing the query string `k H3IN cell`.
-
+        
         The cell must be a valid h3 index hexadecimal string.
         """
     @classmethod
