@@ -10,7 +10,7 @@ mod mokaccino {
     use h3o::{CellIndex, LatLng};
     use mokaccino_rust::prelude::{CNFQueryable, Meters, Qid};
     use pyo3::{
-        exceptions::PyRuntimeError, prelude::*, types::{PyIterator, PyType}
+        exceptions::{PyRuntimeError, PyValueError}, prelude::*, types::{PyIterator, PyType}
     };
     #[cfg(feature = "stub-gen")]
     use pyo3_stub_gen::derive::*;
@@ -121,12 +121,15 @@ mod mokaccino {
             k: &str,
             lat: f64,
             lng: f64,
-            distance_meters: u64,
+            distance_meters: i64,
         ) -> PyResult<Self> {
+            if distance_meters < 0 {
+                return Err(PyValueError::new_err("Distance must be non-negative"));
+            }
             let latlng = LatLng::new(lat, lng).map_err(|e| {
                 PyRuntimeError::new_err(format!("Invalid lat/lng: {}", e))
             })?;
-            let meters = Meters(distance_meters);
+            let meters = Meters(distance_meters as u64);
             Ok(Self(k.latlng_within(latlng, meters)))
         }
 

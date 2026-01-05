@@ -31,3 +31,8 @@ def test_invalid_latlng():
     # Try a very invalid value
     with pytest.raises(RuntimeError, match="Invalid lat/lng"):
         Query.from_latlng_within("location", float('nan'), 0.0, 1000)
+
+def test_negative_distance():
+    # Negative distance should raise ValueError
+    with pytest.raises(ValueError, match="Distance must be non-negative"):
+        Query.from_latlng_within("location", 0.0, 0.0, -100)
