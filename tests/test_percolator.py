@@ -49,15 +49,16 @@ def test_percolator_works():
 
 def percolator_test(p: Percolator, qids: list[int]):
     
+    p = p.optimized().compacted()
 
     assert p.percolate_list(Document()) == []
     assert p.percolate_list(Document().with_value("name", "burger")) == []
-    assert p.percolate_list(Document().with_value("name", "sausage")) == [qids[0], qids[3], 42]
+    assert set(p.percolate_list(Document().with_value("name", "sausage"))) == {qids[0], qids[3], 42}
     assert p.percolate_list(Document().with_value("name", "amaz")) == [qids[1]]
     assert p.percolate_list(Document().with_value("name", "amazing")) == [qids[1]]
     assert p.percolate_list(Document().with_value("name", "amazon")) == [qids[1]]
     assert p.percolate_list(Document().with_value("price", "12")) == []
-    assert p.percolate_list(Document().with_value("price", "13")) == [qids[2], qids[3]]
-    assert p.percolate_list(
+    assert set(p.percolate_list(Document().with_value("price", "13"))) == {qids[2], qids[3]}
+    assert set(p.percolate_list(
         Document().with_value("price", "13").with_value("name", "amazed")
-    ) == [qids[1], qids[2], qids[3]]
+    )) == {qids[1], qids[2], qids[3]}

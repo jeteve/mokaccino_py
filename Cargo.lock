@@ -281,9 +281,9 @@ checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
 name = "hstats"
-version = "0.1.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2f394569b837d1a5d4c2c718d64f48236130d91efcf19237202d8896a339d7f"
+checksum = "7628672fafe16f0541a5618eea8f85c6d8adc449f9ee7e7a2b58edfe882058c0"
 dependencies = [
  "num-traits",
  "rolling-stats",
@@ -453,9 +453,9 @@ dependencies = [
 
 [[package]]
 name = "mokaccino"
-version = "0.7.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd7873b7d935b24db12a26d5157029c0ffd8d2b1ce8ad6e3976e20e836b3bb85"
+checksum = "e3d38ffa82d9ca5a938a2bfffe09b869d41b1338f94e5a0a39430bb28ee532b9"
 dependencies = [
  "bimap",
  "chumsky",
@@ -475,7 +475,7 @@ dependencies = [
 
 [[package]]
 name = "mokaccino_py"
-version = "0.7.0"
+version = "0.8.0"
 dependencies = [
  "h3o",
  "mokaccino",
@@ -881,9 +881,9 @@ dependencies = [
 
 [[package]]
 name = "rolling-stats"
-version = "0.7.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb8b4ded7f5dde5c7ecdc992adc38dd88b999424c0ce6d081ed79ed5db508326"
+checksum = "f48d37da86a2b3e7a04b9514c2be259017995e48fbba9c8fc01c78ed4bd21812"
 dependencies = [
  "num-traits",
 ]

@@ -252,6 +252,25 @@ mod mokaccino {
             Self(mokaccino_rust::prelude::Percolator::default())
         }
 
+
+        /// Returns an optimized percolator
+        /// 
+        /// You can replace your current percolator object with this.
+        /// 
+        fn optimized(&self) -> Self {
+            Self(self.0.optimized())
+        }
+
+
+        /// Returns a percolator where
+        /// holes left by removed queries are gone.
+        /// 
+        /// You can replace your current percolator object with this.
+        /// 
+        fn compacted(&self) -> Self {
+            Self(self.0.compacted())
+        }
+
         /// Add a Query to the Percolator, returning its Qid.
         /// 
         /// The Qid can be used to identify the Query later, so you need

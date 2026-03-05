@@ -38,6 +38,19 @@ class Percolator:
     against which Documents can be percolated.
     """
     def __new__(cls) -> Percolator: ...
+    def optimized(self) -> Percolator:
+        r"""
+        Returns an optimized percolator
+        
+        You can replace your current percolator object with this.
+        """
+    def compacted(self) -> Percolator:
+        r"""
+        Returns a percolator where
+        holes left by removed queries are gone.
+        
+        You can replace your current percolator object with this.
+        """
     def add_query(self, query: Query) -> builtins.int:
         r"""
         Add a Query to the Percolator, returning its Qid.

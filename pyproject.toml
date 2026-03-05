@@ -8,6 +8,7 @@ sdist-include = ["README.md"]
 [project]
 name = "mokaccino"
 requires-python = ">=3.8"
+description = "Percolator - Match transient documents against a set of queries."
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
