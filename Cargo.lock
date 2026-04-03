@@ -475,7 +475,7 @@ dependencies = [
 
 [[package]]
 name = "mokaccino_py"
-version = "0.8.0"
+version = "0.8.0-post1"
 dependencies = [
  "h3o",
  "mokaccino",

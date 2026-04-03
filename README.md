@@ -133,4 +133,10 @@ In development, loop through steps 2 and 3:
 uvx maturin develop && pytest
 ```
 
+You can use `--release` to test a release build:
+
+```sh
+uvx maturin develop --release && pytest
+```
+
 This is developed at https://github.com/jeteve/mokaccino_py
