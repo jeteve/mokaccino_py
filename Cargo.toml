@@ -1,6 +1,6 @@
 [package]
 name = "mokaccino_py"
-version = "0.8.0-post1"
+version = "0.9.1"
 # Note this is the python package version. Keep in sync with the mokaccino_rust version.
 # Use -postN suffixes for packaging revisions.
 edition = "2024"
@@ -24,7 +24,7 @@ pyo3 = { version="0.27.1" }
 pyo3-stub-gen =  { version = "0.17.2", optional = true }
 serde_json = "^1.0"
 h3o = "0.9.4"
-mokaccino_rust = { package="mokaccino", version = "0.8.0", features = ["send", "serde"] }
+mokaccino_rust = { package="mokaccino", version = "0.9.1", features = ["send", "serde"] }
 
 [features]
 stub-gen = ["dep:pyo3-stub-gen", "pyo3/abi3-py310" ]
